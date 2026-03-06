@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BunnyCodeCarrot - 儿童编程学习游戏 | 兔子拔萝卜编程启蒙 | 让孩子爱上逻辑思维</title>
-    <meta name="description" content="BunnyCodeCarrot是一款寓教于乐的儿童编程学习游戏，通过拖拽命令卡片帮助兔子拔萝卜，培养孩子的编程逻辑思维和计算思维能力。">
-    <meta name="keywords" content="儿童编程,编程启蒙,兔子拔萝卜,编程游戏,计算思维">
+    <title>BunnyCodeCarrot - Kids Coding Game | Learn Programming Logic | Logic Thinking for Children</title>
+    <meta name="description" content="BunnyCodeCarrot is an educational coding game for kids, helping children learn programming logic and computational thinking through drag-and-drop command cards to help the bunny pull carrots.">
+    <meta name="keywords" content="kids coding, programming for kids, bunny carrot game, coding game, computational thinking">
     <!-- 规范链接 -->
     <link rel="canonical" href="https://bunnycodecarrot.com/">
     <!-- 多语言支持 -->
-    <link rel="alternate" hreflang="zh" href="?lang=zh" />
-    <link rel="alternate" hreflang="en" href="?lang=en" />
+    <link rel="alternate" hreflang="zh" href="cn.html" />
+    <link rel="alternate" hreflang="en" href="index.html" />
     <!-- Open Graph 标签 -->
-    <meta property="og:title" content="BunnyCodeCarrot - 儿童编程学习游戏 | 让孩子爱上逻辑思维">
-    <meta property="og:description" content="通过游戏化教学帮助6-12岁孩子学习计算思维，培养编程逻辑能力。">
+    <meta property="og:title" content="BunnyCodeCarrot - Kids Coding Game | Logic Thinking for Children">
+    <meta property="og:description" content="Help 6-12 year old children learn computational thinking through gamified teaching, developing programming logic skills.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://bunnycodecarrot.com/">
     <meta property="og:image" content="https://bunnycodecarrot.com/images/game-screenshot.png">
@@ -22,8 +22,8 @@
     <meta property="og:site_name" content="BunnyCodeCarrot">
     <!-- Twitter Card 标签 -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="BunnyCodeCarrot - 儿童编程学习游戏 | 让孩子爱上逻辑思维">
-    <meta name="twitter:description" content="通过游戏化教学帮助6-12岁孩子学习计算思维，培养编程逻辑能力。">
+    <meta name="twitter:title" content="BunnyCodeCarrot - Kids Coding Game | Logic Thinking for Children">
+    <meta name="twitter:description" content="Help 6-12 year old children learn computational thinking through gamified teaching, developing programming logic skills.">
     <meta name="twitter:image" content="https://bunnycodecarrot.com/images/game-screenshot.png">
     <link rel="stylesheet" href="style.css">
     <!-- 结构化数据 -->
@@ -32,18 +32,18 @@
       "@context": "https://schema.org",
       "@type": "Game",
       "name": "BunnyCodeCarrot",
-      "description": "儿童编程学习游戏，通过拖拽命令卡片帮助兔子拔萝卜",
+      "description": "Kids coding learning game, help the bunny pull carrots through drag-and-drop command cards",
       "image": "https://bunnycodecarrot.com/images/game-screenshot.png",
       "audience": {
         "@type": "Audience",
         "audienceType": "children"
       },
-      "educationalLevel": "初级",
-      "interactivityType": "游戏",
+      "educationalLevel": "Beginner",
+      "interactivityType": "Game",
       "offers": {
         "@type": "Offer",
         "price": "0",
-        "priceCurrency": "CNY",
+        "priceCurrency": "USD",
         "availability": "https://schema.org/InStock"
       },
       "author": {
@@ -52,7 +52,7 @@
       },
       "subjectOf": {
         "@type": "WebPage",
-        "name": "BunnyCodeCarrot - 儿童编程学习游戏",
+        "name": "BunnyCodeCarrot - Kids Coding Game",
         "url": "https://bunnycodecarrot.com/"
       }
     }
@@ -61,12 +61,12 @@
 <body>
     <header>
         <div class="header-content">
-            <h1 data-i18n="title">BunnyCodeCarrot - 儿童编程启蒙游戏</h1>
-            <p data-i18n="subtitle">通过游戏化教学培养孩子的计算思维</p>
+            <h1>BunnyCodeCarrot - Kids Coding Game</h1>
+            <p>Cultivate children's computational thinking through gamified teaching</p>
         </div>
         <div class="language-selector">
-            <button id="lang-zh" class="lang-btn" data-lang="zh">中</button>
-            <button id="lang-en" class="lang-btn" data-lang="en">EN</button>
+            <a href="cn.html" id="lang-zh" class="lang-btn" data-lang="zh">中</a>
+            <a href="index.html" id="lang-en" class="lang-btn active" data-lang="en">EN</a>
         </div>
     </header>
     <main>
@@ -74,57 +74,57 @@
         <div class="game-container">
             <div class="main-content">
                 <div class="canvas-section">
-                    <canvas id="gameCanvas" width="400" height="400" aria-label="这是一个互动的兔子拔萝卜编程游戏界面">
-                        这是一个互动的兔子拔萝卜编程游戏界面
+                    <canvas id="gameCanvas" width="400" height="400" aria-label="This is an interactive interface for a 'Rabbit Pulling Carrots' coding game.">
+                        This is an interactive interface for a 'Rabbit Pulling Carrots' coding game.
                     </canvas>
                     <div class="buttons-container">
-                        <button id="runButton" data-i18n="runButton">开始运行</button>
-                        <button id="resetButton" data-i18n="resetButton">重置</button>
+                        <button id="runButton">Start</button>
+                        <button id="resetButton">Reset</button>
                     </div>
                 </div>
                 <div id="command-queue" class="command-queue"></div>
                 <div id="command-bank" class="command-bank">
-                    <div class="command-card" draggable="true" data-command="up" data-i18n="command.up">前进</div>
-                    <div class="command-card" draggable="true" data-command="down" data-i18n="command.down">后退</div>
-                    <div class="command-card" draggable="true" data-command="left" data-i18n="command.left">左移</div>
-                    <div class="command-card" draggable="true" data-command="right" data-i18n="command.right">右移</div>
-                    <div class="command-card" draggable="true" data-command="pull" data-i18n="command.pull">拔萝卜</div>
-                    <div class="command-card loop-card" draggable="true" data-command="loop" data-i18n="command.loop">循环</div>
+                    <div class="command-card" draggable="true" data-command="up">Move Forward</div>
+                    <div class="command-card" draggable="true" data-command="down">Move Backward</div>
+                    <div class="command-card" draggable="true" data-command="left">Turn Left</div>
+                    <div class="command-card" draggable="true" data-command="right">Turn Right</div>
+                    <div class="command-card" draggable="true" data-command="pull">Pull Carrot</div>
+                    <div class="command-card loop-card" draggable="true" data-command="loop">Loop</div>
                 </div>
             </div>
         </div>
         <section class="game-intro">
-            <h2 data-i18n="gameIntro.title">游戏介绍</h2>
-            <p data-i18n="gameIntro.description">BunnyCodeCarrot是一款专为儿童设计的编程启蒙游戏，通过帮助可爱的兔子拔萝卜的趣味方式，让孩子们在玩中学习编程逻辑，培养计算思维能力。</p>
-            <p data-i18n="gameIntro.age">适合年龄：6-12岁</p>
+            <h2>Game Introduction</h2>
+            <p>BunnyCodeCarrot is a programming game designed specifically for children. Through the fun way of helping the cute bunny pull carrots, children learn programming logic and develop computational thinking skills while playing.</p>
+            <p>Suitable age: 6-12 years old</p>
         </section>
         <section class="seo-content">
-            <h2 data-i18n="seo.title">为什么6-12岁孩子需要学习计算思维</h2>
-            <p data-i18n="seo.content">在数字化时代，计算思维已成为孩子必备的核心能力之一。6-12岁是儿童逻辑思维发展的关键期，通过学习编程概念，孩子能够培养问题分解、模式识别、算法设计和抽象思维能力。BunnyCodeCarrot通过游戏化教学方法，将抽象的编程概念转化为生动有趣的兔子拔萝卜游戏，让孩子在实践中理解循环、条件判断等编程逻辑。我们的游戏设计符合儿童认知特点，通过拖拽命令卡片的方式，降低编程学习门槛，让每个孩子都能轻松入门，爱上逻辑思维的魅力。</p>
+            <h2>Why 6-12 year old children need to learn computational thinking</h2>
+            <p>In the digital age, computational thinking has become one of the essential core abilities for children. The age of 6-12 is a critical period for children's logical thinking development. By learning programming concepts, children can develop problem decomposition, pattern recognition, algorithm design, and abstract thinking abilities. BunnyCodeCarrot transforms abstract programming concepts into a lively and interesting bunny carrot-pulling game through gamified teaching methods, allowing children to understand programming logic such as loops and conditional judgments in practice. Our game design meets children's cognitive characteristics, and through the drag-and-drop command card method, it lowers the threshold for programming learning, allowing every child to easily get started and fall in love with the charm of logical thinking.</p>
         </section>
         <section class="game-instructions">
-            <h2 data-i18n="instructions.title">游戏玩法</h2>
+            <h2>How to Play</h2>
             <ol>
-                <li data-i18n="instructions.step1">从右侧的命令卡片中选择需要的指令</li>
-                <li data-i18n="instructions.step2">将指令拖拽到中间的命令队列中</li>
-                <li data-i18n="instructions.step3">点击「开始运行」按钮，观察兔子执行命令</li>
-                <li data-i18n="instructions.step4">通过调整命令顺序和组合，帮助兔子成功拔到萝卜</li>
-                <li data-i18n="instructions.step5">使用「循环」指令可以重复执行一系列操作</li>
+                <li>Select the required commands from the command cards on the right</li>
+                <li>Drag the commands to the command queue in the middle</li>
+                <li>Click the "Start" button to watch the bunny execute the commands</li>
+                <li>Help the bunny successfully pull the carrot by adjusting the order and combination of commands</li>
+                <li>Use the "Loop" command to repeat a series of operations</li>
             </ol>
         </section>
         <section class="educational-value">
-            <h2 data-i18n="educational.title">教育价值</h2>
+            <h2>Educational Value</h2>
             <ul>
-                <li data-i18n="educational.value1">培养逻辑思维能力</li>
-                <li data-i18n="educational.value2">学习基本编程概念</li>
-                <li data-i18n="educational.value3">提高问题解决能力</li>
-                <li data-i18n="educational.value4">培养耐心和毅力</li>
-                <li data-i18n="educational.value5">激发对编程的兴趣</li>
+                <li>Cultivate logical thinking ability</li>
+                <li>Learn basic programming concepts</li>
+                <li>Improve problem-solving ability</li>
+                <li>Cultivate patience and perseverance</li>
+                <li>Stimulate interest in programming</li>
             </ul>
         </section>
     </main>
     <footer>
-        <p data-i18n="footer">© 2026 BunnyCodeCarrot. 专注儿童编程启蒙教育。</p>
+        <p>© 2026 BunnyCodeCarrot. Focus on children's programming education.</p>
     </footer>
     <script src="game.js"></script>
 </body>

@@ -1,185 +1,4 @@
-// 国际化数据
-const i18n = {
-    zh: {
-        title: 'BunnyCodeCarrot - 儿童编程启蒙游戏',
-        subtitle: '通过游戏化教学培养孩子的计算思维',
-        runButton: '开始运行',
-        resetButton: '重置',
-        command: {
-            up: '前进',
-            down: '后退',
-            left: '左移',
-            right: '右移',
-            pull: '拔萝卜',
-            loop: '循环'
-        },
-        gameIntro: {
-            title: '游戏介绍',
-            description: 'BunnyCodeCarrot是一款专为儿童设计的编程启蒙游戏，通过帮助可爱的兔子拔萝卜的趣味方式，让孩子们在玩中学习编程逻辑，培养计算思维能力。',
-            age: '适合年龄：6-12岁'
-        },
-        seo: {
-            title: '为什么6-12岁孩子需要学习计算思维',
-            content: '在数字化时代，计算思维已成为孩子必备的核心能力之一。6-12岁是儿童逻辑思维发展的关键期，通过学习编程概念，孩子能够培养问题分解、模式识别、算法设计和抽象思维能力。BunnyCodeCarrot通过游戏化教学方法，将抽象的编程概念转化为生动有趣的兔子拔萝卜游戏，让孩子在实践中理解循环、条件判断等编程逻辑。我们的游戏设计符合儿童认知特点，通过拖拽命令卡片的方式，降低编程学习门槛，让每个孩子都能轻松入门，爱上逻辑思维的魅力。'
-        },
-        instructions: {
-            title: '游戏玩法',
-            step1: '从右侧的命令卡片中选择需要的指令',
-            step2: '将指令拖拽到中间的命令队列中',
-            step3: '点击「开始运行」按钮，观察兔子执行命令',
-            step4: '通过调整命令顺序和组合，帮助兔子成功拔到萝卜',
-            step5: '使用「循环」指令可以重复执行一系列操作'
-        },
-        educational: {
-            title: '教育价值',
-            value1: '培养逻辑思维能力',
-            value2: '学习基本编程概念',
-            value3: '提高问题解决能力',
-            value4: '培养耐心和毅力',
-            value5: '激发对编程的兴趣'
-        },
-        footer: '© 2026 BunnyCodeCarrot. 专注儿童编程启蒙教育。',
-        messages: {
-            noCommands: '请添加指令后再运行',
-            reset: '已重置到起点',
-            bump: '撞墙啦，请修改指令',
-            success: '成功拔到萝卜！',
-            level: '第 {level} 关',
-            skinChanged: '已切换到{skin}',
-            allLevelsCompleted: '恭喜你完成了所有关卡！'
-        },
-        levelSelect: {
-            title: '选择关卡'
-        }
-    },
-    en: {
-        title: 'BunnyCodeCarrot - Kids Coding启蒙 Game',
-        subtitle: 'Cultivate children\'s computational thinking through gamified teaching',
-        runButton: 'Start',
-        resetButton: 'Reset',
-        command: {
-            up: 'Move Forward',
-            down: 'Move Backward',
-            left: 'Turn Left',
-            right: 'Turn Right',
-            pull: 'Pull Carrot',
-            loop: 'Loop'
-        },
-        gameIntro: {
-            title: 'Game Introduction',
-            description: 'BunnyCodeCarrot is a programming启蒙 game designed specifically for children. Through the fun way of helping the cute bunny pull carrots, children learn programming logic and develop computational thinking skills while playing.',
-            age: 'Suitable age: 6-12 years old'
-        },
-        seo: {
-            title: 'Why 6-12 year old children need to learn computational thinking',
-            content: 'In the digital age, computational thinking has become one of the essential core abilities for children. The age of 6-12 is a critical period for children\'s logical thinking development. By learning programming concepts, children can develop problem decomposition, pattern recognition, algorithm design, and abstract thinking abilities. BunnyCodeCarrot transforms abstract programming concepts into a lively and interesting bunny carrot-pulling game through gamified teaching methods, allowing children to understand programming logic such as loops and conditional judgments in practice. Our game design meets children\'s cognitive characteristics, and through the drag-and-drop command card method, it lowers the threshold for programming learning, allowing every child to easily get started and fall in love with the charm of logical thinking.'
-        },
-        instructions: {
-            title: 'How to Play',
-            step1: 'Select the required commands from the command cards on the right',
-            step2: 'Drag the commands to the command queue in the middle',
-            step3: 'Click the "Start" button to watch the bunny execute the commands',
-            step4: 'Help the bunny successfully pull the carrot by adjusting the order and combination of commands',
-            step5: 'Use the "Loop" command to repeat a series of operations'
-        },
-        educational: {
-            title: 'Educational Value',
-            value1: 'Cultivate logical thinking ability',
-            value2: 'Learn basic programming concepts',
-            value3: 'Improve problem-solving ability',
-            value4: 'Cultivate patience and perseverance',
-            value5: 'Stimulate interest in programming'
-        },
-        footer: '© 2026 BunnyCodeCarrot. Focus on children\'s programming启蒙 education.',
-        messages: {
-            noCommands: 'Please add commands before running',
-            reset: 'Reset to starting point',
-            bump: 'Hit the wall, please modify the command',
-            success: 'Successfully pulled the carrot!',
-            level: 'Level {level}',
-            skinChanged: 'Switched to {skin}',
-            allLevelsCompleted: 'Congratulations! You have completed all levels!'
-        },
-        levelSelect: {
-            title: 'Select Level'
-        }
-    }
-};
 
-// 当前语言
-let currentLang = 'zh';
-
-// 国际化函数
-function t(key, params = {}) {
-    let value = i18n[currentLang];
-    const keys = key.split('.');
-    for (const k of keys) {
-        if (value && value[k] !== undefined) {
-            value = value[k];
-        } else {
-            return key; // 如果找不到翻译，返回原键
-        }
-    }
-    // 处理占位符
-    if (typeof value === 'string') {
-        for (const [paramKey, paramValue] of Object.entries(params)) {
-            value = value.replace(`{${paramKey}}`, paramValue);
-        }
-    }
-    return value;
-}
-
-// 切换语言
-function switchLanguage(lang) {
-    currentLang = lang;
-    updateLanguage();
-    
-    // 更新语言按钮的活跃状态
-    document.getElementById('lang-zh').classList.remove('active');
-    document.getElementById('lang-en').classList.remove('active');
-    document.getElementById(`lang-${lang}`).classList.add('active');
-}
-
-// 更新页面语言
-function updateLanguage() {
-    // 更新所有带有 data-i18n 属性的元素
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        element.textContent = t(key);
-    });
-    
-    // 更新动态生成的元素
-    updateDynamicElements();
-}
-
-// 更新动态生成的元素
-function updateDynamicElements() {
-    // 更新循环框标题
-    document.querySelectorAll('.loop-title').forEach(element => {
-        element.textContent = t('command.loop');
-    });
-    
-    // 更新命令块文本
-    document.querySelectorAll('.command-text').forEach(element => {
-        const commandBlock = element.closest('.command-block');
-        if (commandBlock) {
-            const command = commandBlock.dataset.command;
-            if (command) {
-                element.textContent = t(`command.${command}`);
-            }
-        }
-    });
-}
-
-// 检测浏览器语言
-function detectBrowserLanguage() {
-    const browserLang = navigator.language || navigator.userLanguage;
-    if (browserLang.startsWith('zh')) {
-        return 'zh';
-    } else {
-        return 'en';
-    }
-}
 
 // 静态常量
 const GRID_SIZE = 80; // 格子像素
@@ -342,7 +161,12 @@ let isFainting = false;
 let particles = [];
 
 // 全局变量
-let canvas, ctx, runButton, resetButton, messageDiv, levelSelectButton, levelSelectPanel;
+let canvas, ctx, runButton, resetButton, messageDiv, levelSelectButton, levelSelectPanel, commandQueue;
+
+// 清空命令队列函数
+function clearCommandQueue() {
+    commandQueue.innerHTML = '';
+}
 
 // 等待 DOM 加载完成
 document.addEventListener('DOMContentLoaded', function() {
@@ -351,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
     runButton = document.getElementById('runButton');
     resetButton = document.getElementById('resetButton');
     messageDiv = document.getElementById('message');
-    const commandQueue = document.getElementById('command-queue');
+    commandQueue = document.getElementById('command-queue');
     const commandBank = document.getElementById('command-bank');
     
     console.log('DOM 加载完成，元素获取:', { canvas, runButton, messageDiv, commandQueue, commandBank });
@@ -368,24 +192,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // 创建皮肤选择UI
     createSkinSelectUI();
     
-    // 初始化语言设置
-    currentLang = detectBrowserLanguage();
-    updateLanguage();
-    
-    // 设置语言按钮的初始活跃状态
-    document.getElementById(`lang-${currentLang}`).classList.add('active');
-    
-    // 添加语言切换按钮事件监听器
-    document.getElementById('lang-zh').addEventListener('click', function() {
-        switchLanguage('zh');
-    });
-    document.getElementById('lang-en').addEventListener('click', function() {
-        switchLanguage('en');
-    });
-    
     // 获取指令的显示文本
     function getCommandText(command) {
-        return t(`command.${command}`) || command;
+        // 检测当前页面语言
+        const lang = document.documentElement.lang;
+        
+        // 命令文本映射
+        const commandTextMap = {
+            en: {
+                up: "Move Forward",
+                down: "Move Backward",
+                left: "Turn Left",
+                right: "Turn Right",
+                pull: "Pull Carrot",
+                loop: "Loop"
+            },
+            'zh-CN': {
+                up: "前进",
+                down: "后退",
+                left: "左移",
+                right: "右移",
+                pull: "拔萝卜",
+                loop: "循环"
+            }
+        };
+        
+        // 默认使用英文
+        const currentLang = lang === 'zh-CN' ? 'zh-CN' : 'en';
+        return commandTextMap[currentLang][command] || command;
     }
     
     // 添加指令到队列或循环框
@@ -401,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const loopTitle = document.createElement('span');
             loopTitle.className = 'loop-title';
-            loopTitle.textContent = t('command.loop');
+            loopTitle.textContent = getCommandText('loop');
             
             const loopCountContainer = document.createElement('div');
             loopCountContainer.className = 'loop-count-container';
@@ -599,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('获取到的指令:', commands);
         
         if (commands.length === 0) {
-            showMessage('请添加指令后再运行', 'error');
+            showMessage('Please add commands before running', 'error');
             return;
         }
         
@@ -610,10 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
         executeCommands(commands, commandElements);
     });
     
-    // 清空命令队列函数
-    function clearCommandQueue() {
-        commandQueue.innerHTML = '';
-    }
+
     
     // 重置按钮点击事件
     resetButton.addEventListener('click', function() {
@@ -639,7 +470,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clearCommandQueue();
         // 重新渲染游戏
         render();
-        showMessage('已重置到起点', 'info');
+        showMessage('Reset to starting point', 'info');
     });
     
     // 加载第一关
@@ -649,7 +480,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function createLevelSelectUI() {
         // 创建关卡选择按钮
         levelSelectButton = document.createElement('button');
-        levelSelectButton.textContent = '关卡选择';
+        levelSelectButton.textContent = 'Level';
         levelSelectButton.id = 'levelSelectButton';
         levelSelectButton.style.position = 'absolute';
         levelSelectButton.style.top = '10px';
@@ -682,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 创建面板标题
         const panelTitle = document.createElement('h2');
-        panelTitle.textContent = t('levelSelect.title');
+        panelTitle.textContent = 'Select Level';
         panelTitle.style.textAlign = 'center';
         panelTitle.style.marginTop = '0';
         levelSelectPanel.appendChild(panelTitle);
@@ -838,7 +669,7 @@ function triggerFaintAnimation() {
         if (canvasElement) {
             canvasElement.classList.remove('canvas-shake');
         }
-        showMessage('撞墙啦，请修改指令', 'error');
+        showMessage('Hit the wall, please modify the command', 'error');
     }, 1000);
 }
 
@@ -995,7 +826,7 @@ function setRandomSkin() {
 function createSkinSelectUI() {
     // 创建皮肤选择按钮
     const skinSelectButton = document.createElement('button');
-    skinSelectButton.textContent = '切换皮肤';
+    skinSelectButton.textContent = 'Theme';
     skinSelectButton.id = 'skinSelectButton';
     skinSelectButton.style.position = 'absolute';
     skinSelectButton.style.top = '10px';
@@ -1009,7 +840,7 @@ function createSkinSelectUI() {
     skinSelectButton.style.cursor = 'pointer';
     skinSelectButton.addEventListener('click', function() {
         setRandomSkin();
-        showMessage(t('messages.skinChanged', { skin: SKIN_STYLES[currentSkin].name }), 'info');
+        showMessage('Switched to ' + SKIN_STYLES[currentSkin].name, 'info');
     });
     document.body.appendChild(skinSelectButton);
 }
@@ -1020,7 +851,7 @@ function loadLevel(levelIndex) {
     console.log('levels.length:', levels.length);
     
     if (levelIndex >= levels.length) {
-        showMessage('恭喜你完成了所有关卡！', 'success');
+        showMessage('Congratulations! You have completed all levels!', 'success');
         // 重置到第一关
         currentLevel = 0;
         levelIndex = 0;
@@ -1062,7 +893,7 @@ function loadLevel(levelIndex) {
     currentLevel = levelIndex;
     console.log('当前关卡:', currentLevel + 1);
     
-    showMessage(t('messages.level', { level: currentLevel + 1 }), 'info');
+    showMessage('Level ' + (currentLevel + 1), 'info');
     render();
     console.log('关卡加载完成');
 }
@@ -1098,7 +929,7 @@ function executeCommands(commands, commandElements) {
             // 检查是否在萝卜位置
             console.log('执行pull指令，当前位置:', rabbit.x, rabbit.y);
             if (rabbit.x === carrot.x && rabbit.y === carrot.y) {
-                showMessage('成功拔到萝卜！', 'success');
+                showMessage('Successfully pulled the carrot!', 'success');
                 console.log('成功拔到萝卜！');
                 
                 // 创建粒子特效
@@ -1511,12 +1342,7 @@ function drawCarrot(x, y) {
 
 // 显示消息
 function showMessage(text, type = '') {
-    // 检查是否是国际化键
-    if (i18n[currentLang].messages[text]) {
-        messageDiv.textContent = i18n[currentLang].messages[text];
-    } else {
-        messageDiv.textContent = text;
-    }
+    messageDiv.textContent = text;
     messageDiv.className = `message ${type}`;
 }
 
