@@ -34,7 +34,9 @@ let rabbit = { x: 0, y: 0, direction: 'up' }; // 初始位置 0,0，初始朝向
 let carrot = { x: 4, y: 4 }; // 萝卜位置 4,4
 let stones = []; // 石头位置数组
 let portals = []; // 传送门位置数组
+let traps = []; // 陷阱位置数组
 let currentLevel = 0; // 当前关卡索引
+let showTraps = false; // 控制陷阱显示的开关变量
 
 // 关卡状态管理
 let unlockedLevels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]; // 已解锁的关卡索引，暂时全部解锁以便测试
@@ -46,105 +48,125 @@ const levels = [
     {
         carrot: { x: 2, y: 2 },
         stones: [{ x: 1, y: 1 }],
-        portals: []
+        portals: [],
+        trap: [{ x: 2, y: 0 }]
     },
     {
         carrot: { x: 3, y: 3 },
         stones: [{ x: 2, y: 2 }],
-        portals: []
+        portals: [],
+        trap: [{ x: 3, y: 2 }]
     },
     {
         carrot: { x: 4, y: 3 },
         stones: [{ x: 2, y: 2 }],
-        portals: []
+        portals: [],
+        trap: [{ x: 3, y: 3 }]
     },
     {
         carrot: { x: 3, y: 4 },
         stones: [{ x: 2, y: 2 }],
-        portals: []
+        portals: [],
+        trap: [{ x: 2, y: 3 }]
     },
     {
         carrot: { x: 4, y: 4 },
         stones: [{ x: 2, y: 2 }],
-        portals: []
+        portals: [],
+        trap: [{ x: 2, y: 4 }]
     },
     // 第2等级（6-10关）：2个石头，无传送门
     {
         carrot: { x: 4, y: 4 },
         stones: [{ x: 2, y: 2 }, { x: 3, y: 4 }],
-        portals: []
+        portals: [],
+        trap: [{ x: 4, y: 1 }, { x: 2, y: 3 }]
     },
     {
         carrot: { x: 4, y: 0 },
         stones: [{ x: 2, y: 2 }, { x: 3, y: 0 }],
-        portals: []
+        portals: [],
+        trap: [{ x: 4, y: 3 }, { x: 2, y: 1 }]
     },
     {
         carrot: { x: 2, y: 4 },
         stones: [{ x: 0, y: 2 }, { x: 2, y: 3 }],
-        portals: []
+        portals: [],
+        trap: [{ x: 3, y: 0 }, { x: 1, y: 3 }]
     },
     {
         carrot: { x: 4, y: 4 },
         stones: [{ x: 0, y: 1 }, { x: 2, y: 2 }],
-        portals: []
+        portals: [],
+        trap: [{ x: 1, y: 2 }, { x: 4, y: 3 }]
     },
     {
         carrot: { x: 4, y: 4 },
         stones: [{ x: 2, y: 3 }, { x: 3, y: 2 }],
-        portals: []
+        portals: [],
+        trap: [{ x: 0, y: 4 }, { x: 4, y: 3 }]
     },
     // 第3等级（11-15关）：3个石头，有传送门
     {
         carrot: { x: 4, y: 4 },
         stones: [{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }],
-        portals: [{ x: 2, y: 1, color: '#4ecdc4' }, { x: 2, y: 4, color: '#4ecdc4' }]
+        portals: [{ x: 2, y: 1, color: '#4ecdc4' }, { x: 2, y: 4, color: '#4ecdc4' }],
+        trap: [{ x: 4, y: 0 }, { x: 0, y: 3 }, { x: 3, y: 4 }]
     },
     {
-        carrot: { x: 4, y: 0 },
-        stones: [{ x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }],
-        portals: [{ x: 0, y: 4, color: '#ff6b6b' }, { x: 4, y: 3, color: '#ff6b6b' }]
+        carrot: { x: 4, y: 4 },
+        stones: [{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 4, y: 2 }],
+        portals: [{ x: 2, y: 1, color: '#4ecdc4' }, { x: 1, y: 2, color: '#4ecdc4' }],
+        trap: [{ x: 3, y: 0 }, { x: 0, y: 3 }, { x: 3, y: 4 }]
     },
     {
         carrot: { x: 4, y: 4 },
         stones: [{ x: 0, y: 1 }, { x: 2, y: 2 }, { x: 4, y: 3 }],
-        portals: [{ x: 2, y: 0, color: '#96ceb4' }, { x: 3, y: 3, color: '#96ceb4' }]
+        portals: [{ x: 2, y: 0, color: '#96ceb4' }, { x: 3, y: 2, color: '#96ceb4' }],
+        trap: [{ x: 1, y: 3 }, { x: 2, y: 1 }, { x: 3, y: 3 }]
     },
     {
         carrot: { x: 4, y: 4 },
-        stones: [{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 2 }],
-        portals: [{ x: 0, y: 1, color: '#45b7d1' }, { x: 4, y: 2, color: '#45b7d1' }]
+        stones: [{ x: 1, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 1 }],
+        portals: [{ x: 0, y: 1, color: '#45b7d1' }, { x: 4, y: 2, color: '#45b7d1' }],
+        trap: [{ x: 2, y: 0 }, { x: 1, y: 4 }, { x: 4, y: 3 }]
     },
     {
         carrot: { x: 4, y: 4 },
         stones: [{ x: 2, y: 0 }, { x: 2, y: 2 }, { x: 2, y: 4 }],
-        portals: [{ x: 0, y: 2, color: '#ffeaa7' }, { x: 3, y: 4, color: '#ffeaa7' }]
+        portals: [{ x: 0, y: 2, color: '#ffeaa7' }, { x: 3, y: 3, color: '#ffeaa7' }],
+        trap: [{ x: 1, y: 0 }, { x: 1, y: 4 }, { x: 4, y: 3 }]
     },
     // 第4等级（16-20关）：4个石头，有传送门
     {
         carrot: { x: 4, y: 4 },
         stones: [{ x: 1, y: 0 }, { x: 2, y: 1 }, { x: 3, y: 3 }, { x: 1, y: 3 }],
-        portals: [{ x: 1, y: 2, color: '#e17055' }, { x: 4, y: 2, color: '#e17055' }]
+        portals: [{ x: 1, y: 2, color: '#e17055' }, { x: 4, y: 2, color: '#e17055' }],
+        trap: [{ x: 2, y: 2 }, { x: 4, y: 3 }, { x: 3, y: 0 }, { x: 4, y: 1 }]
     },
     {
         carrot: { x: 4, y: 4 },
         stones: [{ x: 1, y: 0 }, { x: 0, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 3 }],
-        portals: [{ x: 1, y: 2, color: '#00b894' }, { x: 3, y: 4, color: '#00b894' }]
+        portals: [{ x: 2, y: 1, color: '#00b894' }, { x: 0, y: 4, color: '#00b894' }],
+        trap: [{ x: 2, y: 2 }, { x: 2, y: 0 }, { x: 1, y: 4 }, { x: 3, y: 2 }]
     },
     {
         carrot: { x: 4, y: 0 },
-        stones: [{ x: 3, y: 0 }, { x: 3, y: 1 }, { x: 3, y: 2 }, { x: 3, y: 3 }],
-        portals: [{ x: 1, y: 2, color: '#dfe6e9' }, { x: 4, y: 3, color: '#dfe6e9' }]
+        stones: [{ x: 3, y: 0 }, { x: 0, y: 4 }, { x: 3, y: 2 }, { x: 4, y: 4 }],
+        portals: [{ x: 1, y: 2, color: '#dfe6e9' }, { x: 2, y: 4, color: '#dfe6e9' }],
+        trap: [{ x: 0, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 3 }, { x: 3, y: 1 }]
     },
     {
         carrot: { x: 0, y: 4 },
         stones: [{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }],
-        portals: [{ x: 1, y: 1, color: '#ff6b6b' }, { x: 3, y: 4, color: '#ff6b6b' }]
+        portals: [{ x: 2, y: 1, color: '#ff6b6b' }, { x: 4, y: 3, color: '#ff6b6b' }],
+        trap: [{ x: 0, y: 1 }, { x: 1, y: 3 }, { x: 3, y: 1 }, { x: 3, y: 4 }]
     },
     {
         carrot: { x: 4, y: 4 },
         stones: [{ x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 4 }],
-        portals: [{ x: 4, y: 0, color: '#4ecdc4' }, { x: 3, y: 3, color: '#4ecdc4' }]
+        portals: [{ x: 4, y: 0, color: '#4ecdc4' }, { x: 3, y: 3, color: '#4ecdc4' }],
+        trap: [{ x: 1, y: 0 }, { x: 3, y: 4 }, { x: 1, y: 3 }, { x: 3, y: 1 }]
     }
 ];
 
@@ -156,6 +178,7 @@ let targetPosition = { x: 0, y: 0 };
 
 // 兔子状态
 let isFainting = false;
+let isTrapTriggered = false;
 
 // 粒子系统
 let particles = [];
@@ -177,9 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
     messageDiv = document.getElementById('message');
     commandQueue = document.getElementById('command-queue');
     const commandBank = document.getElementById('command-bank');
-    
-    console.log('DOM 加载完成，元素获取:', { canvas, runButton, messageDiv, commandQueue, commandBank });
-    
+
     // 初始化关卡状态
     loadLevelStatus();
     
@@ -191,6 +212,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 创建皮肤选择UI
     createSkinSelectUI();
+    
+    // 初始化陷阱显示按钮文本
+    const lang = document.documentElement.lang;
     
     // 获取指令的显示文本
     function getCommandText(command) {
@@ -640,6 +664,11 @@ function checkCollision(x, y) {
     return stones.some(stone => stone.x === x && stone.y === y);
 }
 
+// 检查是否踩中陷阱
+function checkTrap(x, y) {
+    return traps.some(trap => trap.x === x && trap.y === y);
+}
+
 // 检查是否在传送门位置
 function checkPortal(x, y) {
     const portal = portals.find(p => p.x === x && p.y === y);
@@ -671,6 +700,37 @@ function triggerFaintAnimation() {
         }
         showMessage('Hit the wall, please modify the command', 'error');
     }, 1000);
+}
+
+// 触发陷阱动画
+function triggerTrapAnimation() {
+    // 设置陷阱触发状态
+    isTrapTriggered = true;
+    
+    // 获取canvas元素并添加抖动类
+    const canvasElement = document.getElementById('gameCanvas');
+    if (canvasElement) {
+        canvasElement.classList.add('canvas-shake');
+    }
+    
+    // 播放陷阱音效（预留位置）
+    // playSound('trap');
+    
+    // 1秒后移除抖动类并显示提示
+    setTimeout(() => {
+        if (canvasElement) {
+            canvasElement.classList.remove('canvas-shake');
+        }
+        showMessage('Stepped on a trap! Game over, restarting level', 'error');
+    }, 1000);
+    
+    // 5秒后重新加载当前关卡
+    setTimeout(() => {
+        // 清空命令队列
+        clearCommandQueue();
+        // 重新加载当前关卡
+        loadLevel(currentLevel);
+    }, 5000);
 }
 
 // 移动兔子函数
@@ -778,6 +838,14 @@ function moveRabbit(direction) {
     if (portal) {
         rabbit.x = portal.x;
         rabbit.y = portal.y;
+    }
+    
+    // 检查陷阱
+    if (checkTrap(rabbit.x, rabbit.y)) {
+        // 触发陷阱动画
+        triggerTrapAnimation();
+        // 停止指令执行
+        return;
     }
     
     // 设置目标位置
@@ -890,8 +958,14 @@ function loadLevel(levelIndex) {
     portals = level.portals.map(portal => ({ ...portal }));
     console.log('传送门位置:', portals);
     
+    traps = level.trap.map(trap => ({ ...trap }));
+    console.log('陷阱位置:', traps);
+    
     currentLevel = levelIndex;
     console.log('当前关卡:', currentLevel + 1);
+    
+    // 重置陷阱触发状态
+    isTrapTriggered = false;
     
     showMessage('Level ' + (currentLevel + 1), 'info');
     render();
@@ -907,6 +981,13 @@ function executeCommands(commands, commandElements) {
         if (index >= commands.length) {
             // 所有指令执行完毕
             console.log('所有指令执行完毕');
+            runButton.disabled = false;
+            return;
+        }
+        
+        // 检查是否触发了陷阱，如果是则停止执行
+        if (isTrapTriggered) {
+            console.log('陷阱已触发，停止执行指令');
             runButton.disabled = false;
             return;
         }
@@ -973,6 +1054,12 @@ function executeCommands(commands, commandElements) {
             moveRabbit(command);
             // 延迟执行下一条指令，等待动画完成
             setTimeout(() => {
+                // 检查是否触发了陷阱，如果是则停止执行
+                if (isTrapTriggered) {
+                    console.log('陷阱已触发，停止执行指令');
+                    runButton.disabled = false;
+                    return;
+                }
                 // 移除当前高亮
                 if (commandElements[index - 1]) {
                     commandElements[index - 1].classList.remove('command-highlight');
@@ -1073,6 +1160,48 @@ function drawPortal(x, y, color) {
     }
 }
 
+// 绘制陷阱
+function drawTrap(x, y) {
+    const centerX = x * GRID_SIZE + GRID_SIZE / 2;
+    const centerY = y * GRID_SIZE + GRID_SIZE / 2;
+    
+    if (currentSkin === 'pixel') {
+        // 像素风格陷阱
+        // 绘制像素风格陷阱主体（方形）
+        ctx.fillStyle = '#333';
+        ctx.fillRect(centerX - 20, centerY - 20, 40, 40);
+        
+        // 绘制像素风格陷阱内部
+        ctx.fillStyle = '#000';
+        ctx.fillRect(centerX - 15, centerY - 15, 30, 30);
+        
+        // 绘制像素风格陷阱边缘
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(centerX - 20, centerY - 20, 40, 40);
+    } else {
+        // 手绘风格陷阱
+        // 绘制陷阱主体
+        ctx.fillStyle = '#333';
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 25, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // 绘制陷阱内部
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 15, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // 绘制陷阱边缘
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 25, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+}
+
 // 渲染函数
 function render(progress = 0) {
     // 清空画布
@@ -1083,6 +1212,11 @@ function render(progress = 0) {
     
     // 绘制石头
     stones.forEach(stone => drawStone(stone.x, stone.y));
+    
+    // 绘制陷阱（根据开关变量显示）
+    if (isTrapTriggered || showTraps) {
+        traps.forEach(trap => drawTrap(trap.x, trap.y));
+    }
     
     // 绘制传送门
     portals.forEach(portal => drawPortal(portal.x, portal.y, portal.color));
