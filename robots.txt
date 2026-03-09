@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bunnycodecarrot.com/sitemap.xml
+Sitemap: https://bunnycodecarrot.cc/sitemap.xml
