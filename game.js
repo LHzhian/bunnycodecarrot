@@ -36,7 +36,7 @@ let stones = []; // 石头位置数组
 let portals = []; // 传送门位置数组
 let traps = []; // 陷阱位置数组
 let currentLevel = 0; // 当前关卡索引
-let showTraps = false; // 控制陷阱显示的开关变量
+let showTraps = true; // 控制陷阱显示的开关变量
 
 // 关卡状态管理
 let unlockedLevels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]; // 已解锁的关卡索引，暂时全部解锁以便测试
