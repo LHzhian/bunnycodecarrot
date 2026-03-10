@@ -36,7 +36,8 @@ let stones = []; // 石头位置数组
 let portals = []; // 传送门位置数组
 let traps = []; // 陷阱位置数组
 let currentLevel = 0; // 当前关卡索引
-let showTraps = true; // 控制陷阱显示的开关变量
+let showTraps = false; // 控制陷阱显示的开关变量，初始为false
+let trapBreatheInterval; // 陷阱呼吸效果的计时器
 
 // 关卡状态管理
 let unlockedLevels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]; // 已解锁的关卡索引，暂时全部解锁以便测试
@@ -492,8 +493,8 @@ document.addEventListener('DOMContentLoaded', function() {
         rabbit = { x: 0, y: 0, direction: initialDirection };
         // 清空命令队列
         clearCommandQueue();
-        // 重新渲染游戏
-        render();
+        // 重新加载当前关卡以重置陷阱呼吸效果
+        loadLevel(currentLevel);
         showMessage('Reset to starting point', 'info');
     });
     
@@ -918,6 +919,11 @@ function loadLevel(levelIndex) {
     console.log('加载关卡:', levelIndex + 1);
     console.log('levels.length:', levels.length);
     
+    // 清除之前的陷阱呼吸计时器
+    if (trapBreatheInterval) {
+        clearInterval(trapBreatheInterval);
+    }
+    
     if (levelIndex >= levels.length) {
         showMessage('Congratulations! You have completed all levels!', 'success');
         // 重置到第一关
@@ -966,6 +972,27 @@ function loadLevel(levelIndex) {
     
     // 重置陷阱触发状态
     isTrapTriggered = false;
+    // 初始隐藏陷阱
+    showTraps = false;
+    
+    // 设置陷阱呼吸效果：隐藏5秒，显示1秒，循环
+    function breatheEffect() {
+        // 隐藏陷阱，持续5秒
+        showTraps = false;
+        render();
+        trapBreatheInterval = setTimeout(() => {
+            // 显示陷阱，持续1秒
+            showTraps = true;
+            render();
+            trapBreatheInterval = setTimeout(() => {
+                // 递归调用，重复呼吸效果
+                breatheEffect();
+            }, 1000); // 显示1秒
+        }, 5000); // 隐藏5秒
+    }
+    
+    // 开始呼吸效果
+    breatheEffect();
     
     showMessage('Level ' + (currentLevel + 1), 'info');
     render();
